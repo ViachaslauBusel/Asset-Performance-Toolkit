@@ -1,0 +1,15 @@
+{
+  "name": "com.asset.perfomance.toolkit",
+  "version": "1.0.0",
+  "displayName": "Asset Perfomance Toolkit",
+  "description": "Optimizes asset management, expands Asset Bundle capabilities. This package includes advanced tools for distributing workload over time, ensuring efficient task execution and improved performance.",
+  "unity": "2019.1",
+  "unityRelease": "0b5",
+  "documentationUrl": "https://github.com/ViachaslauBusel/Asset-Performance-Toolkit",
+
+  "author": {
+    "name": "Viachaslau",
+    "email": "vyacheslav.bysel@gmail.com",
+    "url": "https://github.com/ViachaslauBusel"
+  }
+}
