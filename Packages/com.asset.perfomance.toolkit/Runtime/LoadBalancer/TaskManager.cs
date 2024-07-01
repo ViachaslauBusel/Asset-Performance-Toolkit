@@ -105,7 +105,7 @@ namespace OpenWorld.Loader
             else enabled = false;
         }
 
-        internal static void InstantiateImmediately()
+        public static void InstantiateImmediately()
         {
            while(_tasks.Count > 0)
                  _tasks.Dequeue()?.Invoke();

@@ -20,7 +20,7 @@ namespace Bundles
 
         }
 
-        internal AssetBundleRequest LoadTileAsync<T>(string path)
+        public AssetBundleRequest LoadTileAsync<T>(string path)
         {
             return m_map.LoadAssetAsync<T>(path);
         }

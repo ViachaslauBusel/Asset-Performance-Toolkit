@@ -2,7 +2,7 @@
 
 namespace OpenWorld.Loader
 {
-    class TaskCoroutine : ITask, IWorkTask, ICoroutineTask
+    public class TaskCoroutine : ITask, IWorkTask, ICoroutineTask
     {
         private IEnumerator m_enumerator;
         public bool Completed { get; private set; } = false;
