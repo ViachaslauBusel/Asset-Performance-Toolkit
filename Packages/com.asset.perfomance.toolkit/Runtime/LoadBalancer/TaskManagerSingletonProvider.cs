@@ -14,7 +14,7 @@ namespace OpenWorld.Loader
     {
         private static TaskManager _instance;
 
-        private static TaskManager Instance
+        public static TaskManager Instance
         {
             get
             {
