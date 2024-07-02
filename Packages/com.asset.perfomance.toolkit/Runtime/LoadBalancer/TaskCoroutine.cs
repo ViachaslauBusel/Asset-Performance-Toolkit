@@ -5,7 +5,7 @@ namespace OpenWorld.Loader
     public class TaskCoroutine : ITask, IWorkTask, ICoroutineTask
     {
         private IEnumerator m_enumerator;
-        public bool Completed { get; private set; } = false;
+        public bool IsCompleted { get; private set; } = false;
 
         public TaskCoroutine(IEnumerator enumerator)
         {
@@ -14,17 +14,17 @@ namespace OpenWorld.Loader
 
         public void Cancel()
         {
-            Completed = true;
+            IsCompleted = true;
         }
 
         public void Invoke()
         {
-            Completed = true;
+            IsCompleted = true;
         }
 
         public bool MoveNext()
         {
-            if (Completed) { return false; }
+            if (IsCompleted) { return false; }
             return m_enumerator.MoveNext();
         }
     }

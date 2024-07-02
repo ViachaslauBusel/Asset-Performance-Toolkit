@@ -8,7 +8,7 @@ namespace OpenWorld.Loader
 {
     public interface ITask
     {
-        bool Completed { get; }
+        bool IsCompleted { get; }
         void Cancel();
        
     }

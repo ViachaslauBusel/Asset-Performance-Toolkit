@@ -54,7 +54,7 @@ namespace Bundles
         }
         private IEnumerator Initial()
         {
-         //   info.text = LocalizationManager.Instance.GetText("Update.Connecting");
+            //   info.text = LocalizationManager.Instance.GetText("Update.Connecting");
             progress.text = "";
             progressBar.fillAmount = 0.0f;
             UnityWebRequest webRequest = UnityWebRequestAssetBundle.GetAssetBundle(Adress + Manifest); // assetBundle also have data.
@@ -68,14 +68,14 @@ namespace Bundles
             }
 
             AssetBundle bundle = DownloadHandlerAssetBundle.GetContent(webRequest);
-          
+
             //  bundle.Unload(false);
             AssetBundleManifest manifest = bundle.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
 
-        //    info.text = LocalizationManager.Instance.GetText("Update.Checking");
+            //    info.text = LocalizationManager.Instance.GetText("Update.Checking");
             while (!Caching.ready) yield return null;
             ulong totalBytesDownload = 0;
-          
+
 
             string[] _bundles = manifest.GetAllAssetBundles();
             for (int i = 0; i < _bundles.Length; i++)
@@ -92,7 +92,7 @@ namespace Bundles
                 UnityWebRequest uwr = UnityWebRequest.Head(Adress + _bundles[i]);
                 yield return uwr.SendWebRequest();
 
-                if (webRequest.result != UnityWebRequest.Result.Success)
+                if (uwr.result != UnityWebRequest.Result.Success)
                 {
                     panelRetry.SetActive(true);
                     yield break;
@@ -102,10 +102,9 @@ namespace Bundles
                 int.TryParse(size, out int result);
 
                 totalBytesDownload += (ulong)result;
-
             }
 
-          //  info.text = LocalizationManager.Instance.GetText("Update.Downloading");
+            //  info.text = LocalizationManager.Instance.GetText("Update.Downloading");
             BundlesManager.Clear();
             ulong bytesDownload = 0;
             for (int i = 0; i < _bundles.Length; i++)
@@ -115,7 +114,7 @@ namespace Bundles
                 unityWebRequest.SendWebRequest();
                 while (!unityWebRequest.isDone)
                 {
-                  //  progress.text = BytesFormat.SizeSuffix(bytesDownload + unityWebRequest.downloadedBytes) + "/" + BytesFormat.SizeSuffix(totalBytesDownload);
+                    //  progress.text = BytesFormat.SizeSuffix(bytesDownload + unityWebRequest.downloadedBytes) + "/" + BytesFormat.SizeSuffix(totalBytesDownload);
                     progressBar.fillAmount = (float)((bytesDownload + unityWebRequest.downloadedBytes) / (double)totalBytesDownload);
                     yield return null;
                 }
@@ -130,7 +129,7 @@ namespace Bundles
                 BundlesManager.Add(content);
             }
             canvas.enabled = false;
-              bundle.Unload(false);
+            bundle.Unload(false);
             BundlesManager.LoadingComplete();
         }
     }

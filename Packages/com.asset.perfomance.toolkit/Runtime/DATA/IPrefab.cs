@@ -11,7 +11,5 @@ namespace DATA
          string GUID { get; }
          string Path { get; }
          string Bundle { get; }
-         int BundleKEY { get; }
-
     }
 }

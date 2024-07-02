@@ -9,7 +9,7 @@ namespace OpenWorld.Loader
     public class Task : ITask, IWorkTask
     {
         private Action m_action;
-        public bool Completed { get; private set; } = false;
+        public bool IsCompleted { get; private set; } = false;
 
         public Task(Action action)
         {
@@ -19,13 +19,13 @@ namespace OpenWorld.Loader
         public void Invoke()
         {
             m_action?.Invoke();
-            Completed = true;
+            IsCompleted = true;
         }
 
         public void Cancel()
         {
             m_action = null;
-            Completed = true;
+            IsCompleted = true;
         }
     }
 }

@@ -8,40 +8,45 @@ namespace OpenWorld.Loader
 {
     class TaskPrefabLoader<T> : ITask, IWorkTask, ICoroutineTask where T: UnityEngine.Object
     {
-        public bool Completed { get; private set; } = false;
-        private IEnumerator m_enumerator;
-        private T m_prefab;
-        private Action<T> m_action;
+        private IEnumerator _enumerator;
+        private T _prefab;
+        private Action<T> _action;
+        private bool _isCompleted = false;
+
+
+        public bool IsCompleted => _isCompleted;
+
+
         public TaskPrefabLoader(Prefab<T> prefab, Action<T> action) 
         {
-            m_enumerator = PrefabLoader(prefab);
-            m_action = action;
+            _enumerator = PrefabLoader(prefab);
+            _action = action;
         }
 
         public void Cancel()
         {
-            m_enumerator = null;
-            m_action = null;
-            Completed = true;
+            _enumerator = null;
+            _action = null;
+            _isCompleted = true;
         }
 
         public void Invoke()
         {
-            m_action?.Invoke(m_prefab);
-            Completed = true;
+            _action?.Invoke(_prefab);
+            _isCompleted = true;
         }
 
         public bool MoveNext()
         {
-            if (m_enumerator == null) return false;
-            return m_enumerator.MoveNext();
+            if (_enumerator == null) return false;
+            return _enumerator.MoveNext();
         }
 
         private IEnumerator PrefabLoader(Prefab<T> prefab)
         {
             if (prefab == null) yield break;
 #if UNITY_EDITOR
-            m_prefab = prefab.Asset;
+            _prefab = prefab.Asset;
             yield return null;
 #else
             var request = BundlesManager.LoadAssetAsync(prefab);

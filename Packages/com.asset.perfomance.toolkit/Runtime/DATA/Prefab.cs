@@ -13,7 +13,6 @@ namespace DATA
         [SerializeField] string _guid;
         [SerializeField] string _path;
         [SerializeField] string _bundleName;
-        [SerializeField] int _bundleKEY;
         private T _asset;
 
 
@@ -25,8 +24,6 @@ namespace DATA
         public string Path => _path;
         /// <summary> Bundle name. </summary>
         public string Bundle => _bundleName;
-        /// <summary> Hash code of the bundle name, for searching in a Dictionary. </summary>
-        public int BundleKEY => _bundleKEY;
 
         //-----------------------------------------------------------
 
@@ -82,11 +79,6 @@ namespace DATA
             if (string.IsNullOrEmpty(_bundleName))
             {
                 Debug.LogError($"Could not find bundle for {_path}");
-                _bundleKEY = 0;
-            }
-            else
-            {
-                _bundleKEY = _bundleName.ToLower().GetHashCode();
             }
         }
 
@@ -96,7 +88,6 @@ namespace DATA
             _path = "";
             _asset = null;
             _bundleName = "";
-            _bundleKEY = 0;
         }
         //-----------------------------------------------------------
 #endif
