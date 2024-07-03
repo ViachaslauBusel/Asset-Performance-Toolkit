@@ -56,8 +56,8 @@ namespace OpenWorld.Loader
                 yield break;
             }
         yield return request;
-        m_prefab = request.asset as T;
-        if(m_prefab == null) Debug.Log($"Error in wait or cast:{request.asset == null} : {request.asset.GetType()}");
+        _prefab = request.asset as T;
+        if(_prefab == null) Debug.Log($"Error in wait or cast:{request.asset == null} : {request.asset.GetType()}");
 #endif
         }
     }
