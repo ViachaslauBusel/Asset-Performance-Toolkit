@@ -14,18 +14,34 @@ namespace OpenWorld.Loader
     {
         private static TaskManager _instance;
 
-        public static TaskManager Instance
+        private static TaskManager Instance
         {
             get
             {
                 if (_instance == null)
                 {
+                    if(!Application.isPlaying)
+                    {
+                        return null;
+                    }
                     GameObject go = new GameObject("TaskManager");
                     _instance = go.AddComponent<TaskManager>();
                     _instance.enabled = false;
                 }
                 return _instance;
             }
+        }
+
+        public static ITask Execute(Action action)
+        {
+            if (Instance == null)
+            {
+                action?.Invoke();
+                Task task = new Task(action);
+                task.Invoke();
+                return task;
+            }
+            return Instance.ExecuteAction(action);
         }
 
         private void OnDestroy()

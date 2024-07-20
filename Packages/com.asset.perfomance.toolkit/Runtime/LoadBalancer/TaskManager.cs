@@ -18,24 +18,23 @@ namespace OpenWorld.Loader
 
         private Queue<IWorkTask> _tasks = new Queue<IWorkTask>();
         private LinkedList<ICoroutineTask> _coroutines = new LinkedList<ICoroutineTask>();
-      
 
         /// <summary>
-        /// Add a task to the execution queue
+        /// Add an action task to the execution queue
         /// </summary>
-        public ITask Execute(Action action)
+        internal ITask ExecuteAction(Action action)
         {
             Task task = new Task(action);
             _tasks.Enqueue(task);
-          
+
             enabled = true;
             return task;
         }
 
         /// <summary>
-        /// Load asset from bundle and add task to execution queue
+        /// Load asset from bundle and add a prefab loading task to the execution queue
         /// </summary>
-        public ITask Execute<T>(Prefab<T> prefab, Action<T> action) where T:UnityEngine.Object
+        internal ITask ExecutePrefabLoad<T>(Prefab<T> prefab, Action<T> action) where T : UnityEngine.Object
         {
             TaskPrefabLoader<T> task = new TaskPrefabLoader<T>(prefab, action);
             _coroutines.AddLast(task);
@@ -45,11 +44,10 @@ namespace OpenWorld.Loader
         }
 
         /// <summary>
-        /// Add a task to the execution queue
+        /// Add a coroutine task to the execution queue
         /// </summary>
-        public ITask Execute(IEnumerator enumerator)
+        internal ITask ExecuteCoroutine(IEnumerator enumerator)
         {
-
             TaskCoroutine task = new TaskCoroutine(enumerator);
             _coroutines.AddLast(task);
             enabled = true;
@@ -86,7 +84,7 @@ namespace OpenWorld.Loader
             else enabled = false;
         }
 
-        public void InstantiateImmediately()
+        internal void InstantiateImmediately()
         {
            while(_tasks.Count > 0)
                  _tasks.Dequeue()?.Invoke();
