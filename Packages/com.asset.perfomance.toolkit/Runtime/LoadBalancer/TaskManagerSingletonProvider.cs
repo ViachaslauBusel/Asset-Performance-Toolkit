@@ -36,7 +36,6 @@ namespace OpenWorld.Loader
         {
             if (Instance == null)
             {
-                action?.Invoke();
                 Task task = new Task(action);
                 task.Invoke();
                 return task;
