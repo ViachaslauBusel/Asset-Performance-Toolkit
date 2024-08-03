@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DATA
+namespace AssetPerformanceToolkit.FrameBalancer
 {
-    public interface IPrefab
+    interface IWorkTask
     {
-         string GUID { get; }
-         string Path { get; }
-         string Bundle { get; }
+        void Invoke();
     }
 }

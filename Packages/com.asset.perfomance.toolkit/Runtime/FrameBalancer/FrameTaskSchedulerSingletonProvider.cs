@@ -1,20 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
-namespace OpenWorld.Loader
+namespace AssetPerformanceToolkit.FrameBalancer
 {
     /// <summary>
     /// Conveyer of tasks, controls the execution time, dividing tasks by frames
     /// </summary>
-    public partial class TaskManager : MonoBehaviour
+    public partial class FrameTaskScheduler : MonoBehaviour
     {
-        private static TaskManager _instance;
+        private static FrameTaskScheduler _instance;
 
-        private static TaskManager Instance
+        private static FrameTaskScheduler Instance
         {
             get
             {
@@ -22,10 +18,12 @@ namespace OpenWorld.Loader
                 {
                     if(!Application.isPlaying)
                     {
+                        Debug.LogError("FrameTaskScheduler is not available in edit mode");
                         return null;
                     }
-                    GameObject go = new GameObject("TaskManager");
-                    _instance = go.AddComponent<TaskManager>();
+                    GameObject go = new GameObject("FrameTaskScheduler");
+                    DontDestroyOnLoad(go);
+                    _instance = go.AddComponent<FrameTaskScheduler>();
                     _instance.enabled = false;
                 }
                 return _instance;
@@ -40,7 +38,7 @@ namespace OpenWorld.Loader
                 task.Invoke();
                 return task;
             }
-            return Instance.ExecuteAction(action);
+            return Instance.ScheduleTask(action);
         }
 
         private void OnDestroy()

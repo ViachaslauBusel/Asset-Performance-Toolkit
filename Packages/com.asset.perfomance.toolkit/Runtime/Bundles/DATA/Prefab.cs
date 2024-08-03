@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace DATA
+namespace Bundles.DATA
 {
     /// <summary>
     /// Wrapper for an asset, used for loading from bundles.
