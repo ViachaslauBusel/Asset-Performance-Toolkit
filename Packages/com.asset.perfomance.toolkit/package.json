@@ -1,6 +1,6 @@
 {
   "name": "com.asset.perfomance.toolkit",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "displayName": "Asset Perfomance Toolkit",
   "description": "Optimizes asset management, expands Asset Bundle capabilities. This package includes advanced tools for distributing workload over time, ensuring efficient task execution and improved performance.",
   "unity": "2019.1",

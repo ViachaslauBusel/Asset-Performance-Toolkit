@@ -9,7 +9,7 @@ namespace AssetPerformanceToolkit.FrameBalancer
     /// </summary>
     public partial class FrameTaskScheduler : MonoBehaviour
     {
-        private const int TIME = 5;
+        private const int TIME = 1;
 
         private Queue<IWorkTask> _tasks = new Queue<IWorkTask>();
 
@@ -30,14 +30,20 @@ namespace AssetPerformanceToolkit.FrameBalancer
             if (_tasks.Count > 0)
             {
                 long timeStart = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+                int taskDone = 0;
 
                 while (_tasks.Count > 0 && (DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() - timeStart) < TIME) 
                 {
                     try
                     {
                         _tasks.Dequeue().Invoke();
+                        taskDone++;
                     }
                     catch (Exception e) { Debug.LogError($"Error in Task: {e}"); }
+                }
+                if(_tasks.Count > 0)
+                {
+                    Debug.Log($"Tasks done: {taskDone} left: {_tasks.Count}");
                 }
             }
             else enabled = false;
