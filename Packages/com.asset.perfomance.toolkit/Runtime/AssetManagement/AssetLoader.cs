@@ -27,11 +27,13 @@ namespace AssetPerformanceToolkit.AssetManagement
             var task = FrameTaskScheduler.Execute(() =>
             {
                 GameObject go = action(handler.Result, position, rotation, parent);
+                go.SetActive(false);
                 assetHolder.SetGo(go);
             });
 
             await task.Wait();
 
+            assetHolder.InstanceObject.SetActive(true);
             return assetHolder;
         }
 
@@ -51,11 +53,13 @@ namespace AssetPerformanceToolkit.AssetManagement
             var task = FrameTaskScheduler.Execute(() =>
             {
                 GameObject go = GameObject.Instantiate(handler.Result, Vector3.zero, Quaternion.identity, null);
+                go.SetActive(false);
                 assetHolder.SetGo(go);
             });
 
             await task.Wait();
 
+            assetHolder.InstanceObject.SetActive(true);
             return assetHolder;
         }
     }
