@@ -41,10 +41,6 @@ namespace AssetPerformanceToolkit.FrameBalancer
                     }
                     catch (Exception e) { Debug.LogError($"Error in Task: {e}"); }
                 }
-                if(_tasks.Count > 0)
-                {
-                    Debug.Log($"Tasks done: {taskDone} left: {_tasks.Count}");
-                }
             }
             else enabled = false;
         }
