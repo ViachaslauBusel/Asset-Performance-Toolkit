@@ -18,6 +18,11 @@ namespace AssetPerformanceToolkit.AssetManagement
             _assetHandle = meshHandle;
         }
 
+        public AssetInstance(GameObject go)
+        {
+            _objectInstance = go;
+        }
+
         public AssetInstance()
         {
         }
