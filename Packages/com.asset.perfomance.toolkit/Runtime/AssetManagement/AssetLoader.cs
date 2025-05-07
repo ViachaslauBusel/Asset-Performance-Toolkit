@@ -62,5 +62,19 @@ namespace AssetPerformanceToolkit.AssetManagement
             assetHolder.InstanceObject.SetActive(true);
             return assetHolder;
         }
+
+        public async static UniTask<AssetInstance<T>> LoadInstance<T>(AssetReferenceT<T> assetReference) where T : UnityEngine.Object
+        {
+            var handler = Addressables.LoadAssetAsync<T>(assetReference);
+            await handler;
+            if (handler.Status != AsyncOperationStatus.Succeeded)
+            {
+                Addressables.Release(handler);
+                return new AssetInstance<T>();
+            }
+            AssetInstance<T> assetHolder = new AssetInstance<T>(handler);
+           
+            return assetHolder;
+        }
     }
 }

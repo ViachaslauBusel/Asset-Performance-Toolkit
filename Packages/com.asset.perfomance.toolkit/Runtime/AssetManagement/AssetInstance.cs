@@ -1,21 +1,17 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace AssetPerformanceToolkit.AssetManagement
 {
-    public class AssetInstance
+    public class AssetInstance : AssetInstance<GameObject>
     {
-        private AsyncOperationHandle<GameObject> _assetHandle;
         private GameObject _objectInstance;
-
-        public bool IsValid => _assetHandle.IsValid();
+     
         public GameObject InstanceObject => _objectInstance;
 
-        public AssetInstance(AsyncOperationHandle<GameObject> meshHandle)
+        public AssetInstance(AsyncOperationHandle<GameObject> meshHandle) : base(meshHandle)
         {
-            _assetHandle = meshHandle;
         }
 
         public AssetInstance(GameObject go)
@@ -27,21 +23,43 @@ namespace AssetPerformanceToolkit.AssetManagement
         {
         }
 
-        public void Release()
+        public override void Release()
         {
             if (_objectInstance != null)
             {
                 GameObject.Destroy(_objectInstance);
             }
-            if (_assetHandle.IsValid())
-            {
-                Addressables.Release(_assetHandle);
-            }
+            base.Release();
         }
 
         internal void SetGo(GameObject go)
         {
             _objectInstance = go;
+        }
+    }
+
+    public class AssetInstance<T> where T : UnityEngine.Object
+    {
+        private AsyncOperationHandle<T> _assetHandle;
+
+        public bool IsValid => _assetHandle.IsValid();
+        public T Asset => _assetHandle.Result;
+
+        public AssetInstance(AsyncOperationHandle<T> assetHandle)
+        {
+            _assetHandle = assetHandle;
+        }
+
+        public AssetInstance()
+        {
+        }
+
+        public virtual void Release()
+        {
+            if (_assetHandle.IsValid())
+            {
+                Addressables.Release(_assetHandle);
+            }
         }
     }
 }
